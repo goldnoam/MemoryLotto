@@ -34,6 +34,8 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     history: 'היסטוריית משחקים',
     noHistory: 'אין היסטוריה עדיין',
     clearHistory: 'מחק היסטוריה',
+    clearAllData: 'איפוס כל הנתונים',
+    clearSuccess: 'הנתונים אופסו בהצלחה',
     score: 'ניקוד',
     activeTurn: 'תורך!',
     themes: { animals: 'חיות', space: 'חלל', food: 'אוכל', nature: 'טבע', robots: 'רובוטים' }
@@ -67,15 +69,17 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     history: 'Match History',
     noHistory: 'No history yet',
     clearHistory: 'Clear History',
+    clearAllData: 'Clear All Data',
+    clearSuccess: 'Data cleared successfully',
     score: 'Score',
     activeTurn: 'Your Turn!',
     themes: { animals: 'Animals', space: 'Space', food: 'Food', nature: 'Nature', robots: 'Robots' }
   },
-  zh: { title: '记忆大师', start: '开始游戏', theme: '主题', loading: '正在为您创造世界...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史', activeTurn: '轮到你了！' },
-  hi: { title: 'मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'आपके लिए दुनिया बना रहा है...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: ' संगीत', history: 'मैच इतिहास', activeTurn: 'आपकी बारी!' },
-  de: { title: 'Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Erschafft Welten für dich...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf', activeTurn: 'Du bist dran!' },
-  es: { title: 'Maestro de Memoria', start: 'Empezar Juego', theme: 'Tema', loading: 'Creando mundos para ti...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Tu turno!' },
-  fr: { title: 'Maître de Mémoire', start: 'Démarrer', theme: 'Thème', loading: 'Création de mondes pour vous...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !' }
+  zh: { title: '记忆大师', start: '开始游戏', theme: '主题', loading: '正在为您创造世界...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史', activeTurn: '轮到你了！', clearAllData: '清除所有数据' },
+  hi: { title: 'मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'आपके लिए दुनिया बना रहा है...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: ' संगीत', history: 'मैच इतिहास', activeTurn: 'आपकी बारी!', clearAllData: 'सभी डेटा साफ़ करें' },
+  de: { title: 'Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Erschafft Welten für dich...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf', activeTurn: 'Du bist dran!', clearAllData: 'Alle Daten löschen' },
+  es: { title: 'Maestro de Memoria', start: 'Empezar Juego', theme: 'Tema', loading: 'Creando mundos para ti...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Tu turno!', clearAllData: 'Borrar todos los datos' },
+  fr: { title: 'Maître de Mémoire', start: 'Démarrer', theme: 'Thème', loading: 'Création de mondes pour vous...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !', clearAllData: 'Effacer toutes les données' }
 };
 
 const THEME_OPTIONS = ['animals', 'space', 'food', 'nature', 'robots'];
@@ -289,6 +293,16 @@ const App: React.FC = () => {
     }
   };
 
+  const clearAllGameData = () => {
+    if (confirm(t('clearAllData') + '?')) {
+      localStorage.removeItem('memory_game_best_time');
+      localStorage.removeItem('memory_game_history');
+      setBestTime(null);
+      setHistory([]);
+      speak(t('clearSuccess'));
+    }
+  };
+
   const clearMatchHistory = () => {
     setHistory([]);
     localStorage.removeItem('memory_game_history');
@@ -387,6 +401,15 @@ const App: React.FC = () => {
                   <div className="flex gap-2">
                     <button onClick={startGame} className="flex-[3] py-5 bg-gradient-to-r from-cyan-600 to-indigo-600 rounded-2xl text-xl font-black shadow-xl hover:scale-[1.02] transition-all transform active:scale-95 text-white">{t('start')}</button>
                     <button onClick={() => { setShowHistory(true); speak(t('history')); }} className="flex-1 py-5 bg-slate-700/50 hover:bg-slate-700 rounded-2xl border border-white/5 transition-all text-white/70"><i className="fas fa-history text-xl"></i></button>
+                  </div>
+                  
+                  <div className="pt-4 border-t border-white/5 flex justify-center">
+                    <button 
+                      onClick={clearAllGameData}
+                      className="text-[10px] font-bold text-red-400/50 hover:text-red-400 uppercase tracking-widest transition-colors flex items-center gap-2"
+                    >
+                      <i className="fas fa-trash-alt"></i> {t('clearAllData')}
+                    </button>
                   </div>
                 </div>
               </div>
