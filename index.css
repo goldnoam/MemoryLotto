@@ -3,28 +3,28 @@
 @tailwind utilities;
 
 :root {
-    --bg-color: #0f172a;
+    --bg-color: #020617;
     --text-color: #f1f5f9;
     --primary-accent: #22d3ee;
     --secondary-accent: #facc15;
-    --card-back: linear-gradient(to bottom right, #4f46e5, #7e22ce);
+    --card-back: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
     --font-size-base: 16px;
 }
 
 [data-theme='bright'] {
     --bg-color: #f8fafc;
-    --text-color: #1e293b;
+    --text-color: #0f172a;
     --primary-accent: #0ea5e9;
     --secondary-accent: #eab308;
-    --card-back: linear-gradient(to bottom right, #3b82f6, #6366f1);
+    --card-back: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
 }
 
 [data-theme='colorful'] {
-    --bg-color: #4c1d95;
-    --text-color: #fff;
-    --primary-accent: #facc15;
-    --secondary-accent: #ec4899;
-    --card-back: linear-gradient(to bottom right, #db2777, #f59e0b);
+    --bg-color: #1e1b4b;
+    --text-color: #ffffff;
+    --primary-accent: #f472b6;
+    --secondary-accent: #fbbf24;
+    --card-back: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%);
 }
 
 [data-font-size='small'] { --font-size-base: 14px; }
@@ -36,51 +36,60 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-size: var(--font-size-base);
-    transition: background-color 0.3s ease, color 0.3s ease, font-size 0.2s ease;
+    transition: background-color 0.5s ease, color 0.3s ease;
     overflow-x: hidden;
     margin: 0;
-    padding: 0;
 }
 
-.perspective-1000 { perspective: 1000px; }
+/* Gallery Spotlight Effect */
+.gallery-spotlight {
+    background: radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.05) 0%, transparent 70%);
+}
+
+.perspective-2000 { perspective: 2000px; }
 .preserve-3d { transform-style: preserve-3d; }
 .backface-hidden { backface-visibility: hidden; }
 .rotate-y-180 { transform: rotateY(180deg); }
 
-/* Match Animation with Glow */
-@keyframes match-glow {
-    0% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0px var(--primary-accent); }
-    50% { transform: scale(1.05) rotateY(180deg); box-shadow: 0 0 60px 30px var(--primary-accent), 0 0 40px 15px var(--secondary-accent); border-color: var(--secondary-accent); }
-    100% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0px var(--primary-accent); }
+/* Explosive Match Animation */
+@keyframes match-ultra-glow {
+    0% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0px transparent; }
+    30% { transform: scale(1.08) rotateY(180deg); box-shadow: 0 0 80px 20px rgba(34, 211, 238, 0.4), 0 0 40px 10px rgba(250, 204, 21, 0.3); }
+    100% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 20px rgba(34, 211, 238, 0.2); }
 }
 .animate-match { 
-    animation: match-glow 1s ease-out forwards;
+    animation: match-ultra-glow 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.2);
   border-radius: 10px;
 }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--primary-accent), transparent);
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
 
-/* Responsive Grid with wider 240px width to show fewer cards per row */
+/* Majestic Gallery Grid */
 .game-grid {
     display: grid;
-    /* Increased min width to 240px to ensure fewer cards per row as requested */
-    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+    /* Wider columns (min 300px) to ensure fewer images per row and higher focus per item */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     justify-content: center;
-    gap: 2rem;
+    gap: 3rem;
     width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
+    padding: 2rem;
 }
 
 .ads-container {
     @apply my-5 min-h-[60px] flex items-center justify-center rounded-lg text-[10px] text-gray-500;
     background: rgba(0,0,0,0.1);
-    border: 1px dashed rgba(255,255,255,0.1);
+    border: 1px dashed rgba(255,255,255,0.05);
 }
