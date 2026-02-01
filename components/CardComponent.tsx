@@ -29,17 +29,17 @@ const CardComponent: React.FC<CardComponentProps> = ({ card, onClick, disabled }
         </div>
 
         {/* Back Face (The Image) */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-xl overflow-hidden bg-slate-700 border-2 border-indigo-400 shadow-xl z-0">
+        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-xl overflow-hidden bg-slate-900 border-2 border-indigo-400 shadow-xl z-0">
           {!isLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center text-indigo-400/30">
-              <i className="fas fa-circle-notch animate-spin"></i>
+            <div className="absolute inset-0 flex items-center justify-center bg-slate-800 text-indigo-400/30">
+              <i className="fas fa-circle-notch animate-spin text-xl"></i>
             </div>
           )}
           <img 
             src={card.imageUrl} 
             alt="memory card" 
             onLoad={() => setIsLoaded(true)}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`w-full h-full object-cover transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
             loading="eager"
           />
         </div>
