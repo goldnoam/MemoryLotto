@@ -1,3 +1,4 @@
+
 /**
  * Offline-First Image Service
  * Provides local SVG-based assets to ensure the game works without an internet connection.
@@ -5,82 +6,39 @@
 
 const SVGS = {
   animals: [
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGODAzMyI+PHBhdGggZD0iTTEyIDJDMiAyIDIgMTAgMiAxMGMwIDUgNSAxMCAxMCAxMHMxMC01IDEwLTEwYzAtOCAwLTgtMTAtOFoiLz48Y2lyY2xlIGN4PSI4LjUiIGN5PSIxMC41IiByPSIxLjUiIGZpbGw9IndoaXRlIi8+PGNpcmNsZSBjeD0iMTUuNSIgY3k9IjEwLjUiIHI9IjEuNSIgZmlsbD0id2hpdGUiLz48L3N2Zz4=', // Lion-ish
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRkZGRiI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJabS0xIDYgY2lyY2xlIGN4PSI5IiBjeT0iOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iOSIgcj0iMSIvPjwvc3ZnPg==', // Panda
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0E1MkEyaCI+PHBhdGggZD0iTTExIDEzLjQ0bC0yLjUtM3MtMS4zOC0uOTQtMS4zOC0yLjIyIDAtMi4yMiAyLjIyLTIuMjIgMi4yMiAwIDIuMjIgMi4yMnoiLz48L3N2Zz4=', // Fox
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzQwRTA0MCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iOCIvPjwvc3ZnPg==', // Turtle
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGNkI2QiI+PHBhdGggZD0iTTEyIDJMOCAxMGg4eiIvPjwvc3ZnPg==', // Bird
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRDAwMCI+PHBhdGggZD0iTTEyIDlsLTItNkg0bDggMThsOC0xOGgtNnoiLz48L3N2Zz4=', // Giraffe
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzgwODA4MCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48L3N2Zz4=', // Elephant
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzEwMTgxOCI+PHBhdGggZD0iTTEyIDJsLTEwIDhoMjB6Ii8+PC9zdmc+', // Cat
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzlhNTEyNSI+PHBhdGggZD0iTTEyIDNsLTggNWg2djh6Ii8+PC9zdmc+', // Deer
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0REREREOCI+PHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2Ii8+PC9zdmc+', // Polar Bear
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwN0Y3RiI+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSI0IiByeT0iOCIvPjwvc3ZnPg==', // Penguin
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGQTUwMCI+PHBhdGggZD0iTTEyIDJsMTAtOHYxNnoiLz48L3N2Zz4=' // Fish
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FFD700"/><circle cx="35" cy="40" r="5" fill="black"/><circle cx="65" cy="40" r="5" fill="black"/><path d="M40 70 Q50 80 60 70" stroke="black" stroke-width="5" fill="none"/></svg>', // Lion/Face
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" rx="20" fill="%23FF5733"/><circle cx="30" cy="30" r="10" fill="white"/><circle cx="70" cy="30" r="10" fill="white"/></svg>', // Fox/Orange
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="%232ECC71"/><circle cx="50" cy="55" r="10" fill="%2327AE60"/></svg>', // Turtle/Green
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%233498DB"/><rect x="40" y="20" width="20" height="10" fill="white"/></svg>', // Penguin/Blue
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23E74C3C"/><rect x="30" y="45" width="40" height="10" fill="white"/></svg>', // Bird/Red
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" fill="%239B59B6"/><circle cx="50" cy="50" r="20" fill="white"/></svg>', // Purple Cat
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23F1C40F"/><circle cx="50" cy="50" r="15" fill="black"/></svg>', // Bee/Yellow
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10 50 L90 50 L50 10 Z" fill="%231ABC9C"/></svg>', // Fish/Teal
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%2395A5A6"/><rect x="20" y="40" width="60" height="20" fill="black"/></svg>', // Koala/Grey
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" rx="30" fill="%2334495E"/></svg>', // Bear/Dark
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FF69B4"/><circle cx="50" cy="50" r="10" fill="white"/></svg>', // Pig/Pink
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="10" y="40" width="80" height="20" fill="%23D35400"/></svg>' // Worm/Orange
   ],
   space: [
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGQ0IxRSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48L3N2Zz4=', // Sun
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0REQUE1NSI+PHBhdGggZD0iTTEyIDJMMiAxMmwxMCAxMCAxMC0xMHpNMTEgNWgydjJIMTF6Ii8+PC9zdmc+', // Planet
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRkZGRiI+PHBhdGggZD0iTTEyIDlsLTIuNSAyLjUtMS0xTDEyIDZ6Ii8+PC9zdmc+', // Star
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzBFRkZGRiI+PGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjYiLz48L3N2Zz4=', // Moon
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGMDAwMCI+PHBhdGggZD0iTTEyIDJsLTggMTBoMTZ6Ii8+PC9zdmc+', // Rocket
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzU1NTVGRiI+PHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiByeD0iMTAiLz48L3N2Zz4=', // Galaxy
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRUEwMCI+PHBhdGggZD0iTTEyIDJsMiA2aDZsLTUgNGwyIDZoLTVsLTUgNGwyLTZ6Ii8+PC9zdmc+', // Star Big
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzU1NTVGRiI+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSIxMCIgcnk9IjUiLz48L3N2Zz4=', // Saturn
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzgwODA4MCI+PHJlY3QgeD0iMTAiIHk9IjIiIHdpZHRoPSI0IiBoZWlnaHQ9IjIwIi8+PC9zdmc+', // Satellite
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRkZGRiI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMiIvPjwvc3ZnPg==', // Black hole center
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzBFRkZGRiI+PHBhdGggZD0iTTIgMTJsMTAgMTBMMjIgMTJMMTIgMnoiLz48L3N2Zz4=', // Crystal
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzQ0NDQ0NCI+PHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjgiIGhlaWdodD0iOCIvPjwvc3ZnPg==' // Asteroid
-  ],
-  food: [
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGMDAwMCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iOCIvPjwvc3ZnPg==', // Apple
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGQTUwMCI+PHBhdGggZD0iTTEyIDJsLTEwIDEwaDIweiIvPjwvc3ZnPg==', // Pizza
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRDAwMCI+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSI4IiByeT0iNCIvPjwvc3ZnPg==', // Burger
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRDYwMCI+PHBhdGggZD0iTTIgMTJzMTAtNCAxMC00IDExIDQgMTEgNFMxMiAxNiAxMiAxNiAyIDIyIDIgMTJaIi8+PC9zdmc+', // Taco
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRTgzMyI+PHBhdGggZD0iTTIgMTloMjBWMTJMMiAxOXoiLz48L3N2Zz4=', // Cake
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwN0YwMCI+PHJlY3QgeD0iMTAiIHk9IjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjE2Ii8+PC9zdmc+', // Asparagus
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0E1MkEyaCI+PHBhdGggZD0iTTQgNGgxNnYxNkg0eiIvPjwvc3ZnPg==', // Toast
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwRkZGRiI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iNCIvPjwvc3ZnPg==', // Donut
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRDYwMCI+PHBhdGggZD0iTTQgNHYxNmwxNi04eiIvPjwvc3ZnPg==', // Cheese
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRkZGRiI+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSI2IiByeT0iOSIvPjwvc3ZnPg==', // Egg
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwMDA4OCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iOCIvPjwvc3ZnPg==', // Blueberry
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGNDQ0NCI+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSI4IiByeT0iNiIvPjwvc3ZnPg==' // Tomato
-  ],
-  nature: [
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwN0YwMCI+PHBhdGggZD0iTTEyIDJMOCAxMGg4eiIvPjwvc3ZnPg==', // Tree
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwMDBGRiI+PHBhdGggZD0iTTIgMTlzMTAtNCAxMC00IDExIDQgMTEgNHoiLz48L3N2Zz4=', // Wave
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzgwODA4MCI+PHBhdGggZD0iTTEyIDJMMiAyMmg4bDIuNS01IDIgNSA4IDB6Ii8+PC9zdmc+', // Mountain
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRkZGRiI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48L3N2Zz4=', // Cloud
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRDQwMCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iOCIvPjwvc3ZnPg==', // Sun
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGMDAwMCI+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSI0IiByeT0iNiIvPjwvc3ZnPg==', // Flower
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0E1MkEyaCI+PHJlY3QgeD0iMTAiIHk9IjEyIiB3aWR0aD0iNCIgaGVpZ2h0PSI4Ii8+PC9zdmc+', // Mushroom
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRTYzMyI+PHBhdGggZD0iTTEyIDNsLTggMThoMTZ6Ii8+PC9zdmc+', // Island
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwRkYwMCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMiIvPjwvc3ZnPg==', // Leaf
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwODBCMCI+PHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2Ii8+PC9zdmc+', // Lake
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRkZGRSI+PHBhdGggZD0iTTIgMTJsMTAgMTBMMjIgMTJMMTIgMnoiLz48L3N2Zz4=', // Snowflake
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRTAwMCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48L3N2Zz4=' // Moon Yellow
-  ],
-  robots: [
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzgwODA4MCI+PHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2Ii8+PC9zdmc+',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwRkZGRiI+PHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjgiIGhlaWdodD0iOCIvPjwvc3ZnPg==',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTEyIDlsLTQgNGg4eiIvPjwvc3ZnPg==',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGMDAwMCI+PHJlY3QgeD0iMTEiIHk9IjExIiB3aWR0aD0iMiIgaGVpZ2h0PSIyIi8+PC9zdmc+',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwN0Y3RiI+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSI2IiByeT0iNiIvPjwvc3ZnPg==',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzgwODA4MCI+PHBhdGggZD0iTTIgMTloMjB2LTNoLTIwdjN6Ii8+PC9zdmc+',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwRkYwMCI+PHJlY3QgeD0iNCIgeT0iMTQiIHdpZHRoPSIxNiIgaGVpZ2h0PSI0Ii8+PC9zdmc+',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwMDBGRiI+PHBhdGggZD0iTTExIDloMnY2aC0yek00IDEzaDR2LTRoLTR6bTEyIDBoNHYtNGgtNHoiLz48L3N2Zz4=',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzQwNDA0MCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iOCIvPjwvc3ZnPg==',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwRkZGRiI+PHBhdGggZD0iTTEyIDlsLTQtNHY4eiIvPjwvc3ZnPg==',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRkZGRiI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMSIvPjwvc3ZnPg==',
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRDAwMCI+PHJlY3QgeD0iMTAiIHk9IjIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48L3N2Zz4='
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23F39C12"/><circle cx="30" cy="30" r="5" fill="white" opacity="0.5"/></svg>', // Sun
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 60,40 90,40 65,60 75,90 50,70 25,90 35,60 10,40 40,40" fill="%23F1C40F"/></svg>', // Star
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="%232980B9"/><ellipse cx="50" cy="50" rx="45" ry="10" fill="none" stroke="white" stroke-width="2"/></svg>', // Saturn
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 L20 80 L80 80 Z" fill="%23E74C3C"/></svg>', // Rocket
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23BDC3C7"/><circle cx="30" cy="40" r="5" fill="%237F8C8D"/></svg>', // Moon
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="40" ry="20" fill="%238E44AD"/></svg>', // Galaxy
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="40" y="10" width="20" height="80" fill="%2316A085"/></svg>', // Satellite
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="20" fill="black"/><circle cx="50" cy="50" r="40" fill="none" stroke="white" stroke-width="2"/></svg>', // Black Hole
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="30" y="30" width="40" height="40" fill="%23D35400" transform="rotate(45 50 50)"/></svg>', // Asteroid
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="%2327AE60"/></svg>', // Planet Earth-ish
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23C0392B"/></svg>', // Mars
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="10" y="10" width="20" height="20" fill="white"/></svg>' // Comet
   ]
 };
 
-const DEFAULT_POOL = [
-  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzZCQTVFRiI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+',
-  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzgzQThGRiI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+',
-  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzZDM0M5OCI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'
-];
+// Add fallback categories
+(SVGS as any).food = (SVGS as any).animals;
+(SVGS as any).nature = (SVGS as any).space;
+(SVGS as any).robots = (SVGS as any).space;
 
 /**
  * Pre-loads the assets from the local bank.
@@ -90,31 +48,23 @@ export async function generateThemeImages(
   count: number, 
   onProgress: (status: string, progress: number) => void
 ): Promise<string[]> {
-  onProgress(`Shuffling local board: ${theme}...`, 20);
+  onProgress(`Preparing memory board...`, 20);
   
   const themeKey = theme.toLowerCase().trim() as keyof typeof SVGS;
   let pool = SVGS[themeKey] || SVGS.animals;
 
-  // Handle custom theme fallback using a pseudo-random selection from all icons
+  // Handle custom theme fallback
   if (!SVGS[themeKey]) {
-    pool = [...SVGS.animals, ...SVGS.space, ...SVGS.food, ...SVGS.nature, ...SVGS.robots];
+    pool = [...SVGS.animals, ...SVGS.space];
   }
 
   // Shuffle and take required number
   const selected = [...pool].sort(() => Math.random() - 0.5).slice(0, count);
 
-  // Simulate a quick progress to provide feedback, but it's instant since it's local
-  await new Promise(resolve => {
-    let p = 20;
-    const int = setInterval(() => {
-      p += 20;
-      onProgress(`Preparing assets...`, p);
-      if (p >= 100) {
-        clearInterval(int);
-        resolve(null);
-      }
-    }, 50);
-  });
+  // Instant progress simulation
+  onProgress(`Setting up cards...`, 60);
+  await new Promise(resolve => setTimeout(resolve, 300));
+  onProgress(`Done!`, 100);
 
   return selected;
 }

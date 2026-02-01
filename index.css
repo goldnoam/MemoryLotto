@@ -48,23 +48,21 @@ body {
 .backface-hidden { backface-visibility: hidden; }
 .rotate-y-180 { transform: rotateY(180deg); }
 
-@keyframes match-pulse {
-    0% { transform: scale(1) rotateY(180deg); filter: brightness(1) drop-shadow(0 0 0px var(--primary-accent)); }
-    50% { transform: scale(1.1) rotateY(180deg); filter: brightness(1.5) drop-shadow(0 0 20px var(--primary-accent)); }
-    100% { transform: scale(1) rotateY(180deg); filter: brightness(1) drop-shadow(0 0 0px var(--primary-accent)); }
+/* Match Animation with Glow */
+@keyframes match-glow {
+    0% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0px var(--primary-accent); }
+    50% { transform: scale(1.1) rotateY(180deg); box-shadow: 0 0 30px 10px var(--primary-accent); border-color: var(--primary-accent); }
+    100% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0px var(--primary-accent); }
 }
-.animate-match { animation: match-pulse 0.6s ease-out forwards; }
+.animate-match { 
+    animation: match-glow 1s ease-out forwards;
+}
 
 @keyframes rotate { 100% { transform: rotate(360deg); } }
 .animate-spin-slow { animation: rotate 3s linear infinite; }
 
-button:focus-visible, input:focus-visible {
-    @apply outline outline-2 outline-offset-2;
-    outline-color: var(--primary-accent);
-}
-
 .ads-container {
-    @apply my-5 min-h-[90px] flex items-center justify-center rounded-lg text-[10px] text-gray-500;
+    @apply my-5 min-h-[60px] flex items-center justify-center rounded-lg text-[10px] text-gray-500;
     background: rgba(0,0,0,0.1);
     border: 1px dashed rgba(255,255,255,0.1);
 }
@@ -76,6 +74,26 @@ button:focus-visible, input:focus-visible {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.2);
   border-radius: 10px;
+}
+
+/* Responsive Grid Adjustments */
+.game-grid {
+    display: grid;
+    gap: 0.75rem;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr); /* Default mobile */
+}
+
+@media (min-width: 480px) {
+    .game-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 768px) {
+    .game-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .game-grid { grid-template-columns: repeat(6, 1fr); }
 }

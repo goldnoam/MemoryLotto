@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { GameStatus, Card, Player, GameSettings, FontSize, LanguageCode, GameHistoryEntry } from './types';
 import { generateThemeImages } from './services/geminiService';
@@ -23,71 +24,71 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     playAgain: 'משחק חדש',
     bestTime: 'שיא אישי',
     newRecord: 'שיא חדש!',
-    feedback: 'שלח משוב',
-    custom: 'מותאם אישית...',
+    feedback: 'משוב',
+    custom: 'נושא חופשי...',
     music: 'מוזיקה',
     mute: 'השתק',
     unmute: 'הפעל סאונד',
-    export: 'ייצא היסטוריה',
+    export: 'ייצא',
     clear: 'נקה',
-    history: 'היסטוריית משחקים',
+    history: 'היסטוריה',
     noHistory: 'אין היסטוריה עדיין',
     clearHistory: 'מחק היסטוריה',
-    clearAllData: 'איפוס כל הנתונים',
-    clearSuccess: 'הנתונים אופסו בהצלחה',
-    confirmClear: 'האם אתה בטוח שברצונך למחוק את כל היסטוריית המשחקים והשיאים האישיים?',
+    clearAllData: 'איפוס מלא',
+    clearSuccess: 'הנתונים אופסו',
+    confirmClear: 'למחוק את כל הנתונים והשיאים?',
     score: 'ניקוד',
     activeTurn: 'תורך!',
     themes: { animals: 'חיות', space: 'חלל', food: 'אוכל', nature: 'טבע', robots: 'רובוטים' }
   },
   en: {
     title: 'Memory Master',
-    pairs: 'Number of Pairs',
-    players: 'Game Mode',
-    single: 'Single Player',
-    multi: 'Two Players',
-    start: 'Start Game',
+    pairs: 'Pairs',
+    players: 'Mode',
+    single: '1 Player',
+    multi: '2 Players',
+    start: 'Start',
     theme: 'Theme',
-    loading: 'Preparing board...',
-    mainMenu: 'Main Menu',
-    player1: 'Player 1',
-    player2: 'Player 2',
+    loading: 'Preparing...',
+    mainMenu: 'Menu',
+    player1: 'P1',
+    player2: 'P2',
     time: 'Time',
-    left: 'Pairs Left',
+    left: 'Left',
     winner: 'Winner:',
-    draw: 'It\'s a Draw!',
+    draw: 'Draw!',
     playAgain: 'Play Again',
-    bestTime: 'Best Time',
-    newRecord: 'New Record!',
+    bestTime: 'Best',
+    newRecord: 'Record!',
     feedback: 'Feedback',
-    custom: 'Custom...',
+    custom: 'Custom theme...',
     music: 'Music',
     mute: 'Mute',
-    unmute: 'Unmute',
-    export: 'Export History',
+    unmute: 'Sound',
+    export: 'Export',
     clear: 'Clear',
-    history: 'Match History',
-    noHistory: 'No history yet',
+    history: 'History',
+    noHistory: 'Empty',
     clearHistory: 'Clear History',
-    clearAllData: 'Clear All Data',
-    clearSuccess: 'Data cleared successfully',
-    confirmClear: 'Are you sure you want to delete all match history and best times?',
+    clearAllData: 'Factory Reset',
+    clearSuccess: 'Reset successful',
+    confirmClear: 'Clear all data?',
     score: 'Score',
     activeTurn: 'Your Turn!',
     themes: { animals: 'Animals', space: 'Space', food: 'Food', nature: 'Nature', robots: 'Robots' }
   },
-  zh: { title: '记忆大师', start: '开始游戏', theme: '主题', loading: '正在准备...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史', activeTurn: '轮到你了！', clearAllData: '清除所有数据', confirmClear: '您确定要删除所有历史记录吗？' },
-  hi: { title: 'मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'तैयारी...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: ' संगीत', history: 'मैच इतिहास', activeTurn: 'आपकी बारी!', clearAllData: 'सभी डेटा साफ़ करें', confirmClear: 'क्या आप वाकई सारा डेटा हटाना चाहते हैं?' },
-  de: { title: 'Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Vorbereitung...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf', activeTurn: 'Du bist dran!', clearAllData: 'Alle Daten löschen', confirmClear: 'Sind Sie sicher, dass Sie alle Daten löschen möchten?' },
-  es: { title: 'Maestro de Memoria', start: 'Empezar Juego', theme: 'Tema', loading: 'Preparando...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Tu turno!', clearAllData: 'Borrar todos los datos', confirmClear: '¿Estás seguro de que quieres borrar todos los datos?' },
-  fr: { title: 'Maître de Mémoire', start: 'Démarrer', theme: 'Thème', loading: 'Préparation...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !', clearAllData: 'Effacer toutes les données', confirmClear: 'Êtes-vous sûr de vouloir supprimer toutes les données ?' }
+  zh: { title: '记忆大师', start: '开始', theme: '主题', loading: '准备中...', bestTime: '最佳', newRecord: '新纪录！', music: '音乐', history: '历史', activeTurn: '轮到你了！', clearAllData: '重置数据', confirmClear: '确定删除吗？' },
+  hi: { title: 'मेमोरी मास्टर', start: 'शुरू करें', theme: 'विषय', loading: 'तैयारी...', bestTime: 'सर्वश्रेष्ठ', newRecord: 'नया रिकॉर्ड!', music: 'संगीत', history: 'इतिहास', activeTurn: 'बारी!', clearAllData: 'डेटा साफ़ करें', confirmClear: 'डेटा हटाएं?' },
+  de: { title: 'Memory Meister', start: 'Start', theme: 'Thema', loading: 'Vorbereitung...', bestTime: 'Bestzeit', newRecord: 'Rekord!', music: 'Musik', history: 'Verlauf', activeTurn: 'Dran!', clearAllData: 'Reset', confirmClear: 'Daten löschen?' },
+  es: { title: 'Maestro de Memoria', start: 'Empezar', theme: 'Tema', loading: 'Preparando...', bestTime: 'Mejor', newRecord: '¡Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Turno!', clearAllData: 'Borrar todo', confirmClear: '¿Borrar todo?' },
+  fr: { title: 'Maître de Mémoire', start: 'Démarrer', theme: 'Thème', loading: 'Préparation...', bestTime: 'Meilleur', newRecord: 'Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !', clearAllData: 'Effacer', confirmClear: 'Effacer ?' }
 };
 
 const THEME_OPTIONS = ['animals', 'space', 'food', 'nature', 'robots'];
 
 const App: React.FC = () => {
   const [settings, setSettings] = useState<GameSettings>({
-    pairsCount: 12,
+    pairsCount: 8,
     playersCount: 1,
     theme: 'animals',
     uiTheme: 'dark',
@@ -228,7 +229,7 @@ const App: React.FC = () => {
     speak(t('start'));
     setStatus(GameStatus.LOADING);
     setIsNewRecord(false);
-    const finalTheme = customTheme || t(`themes.${settings.theme}`);
+    const finalTheme = customTheme || settings.theme;
     
     const imageUrls = await generateThemeImages(finalTheme, settings.pairsCount, (txt, prog) => {
       setLoadingText(txt);
@@ -277,7 +278,7 @@ const App: React.FC = () => {
           setFlippedIndices([]);
           setIsProcessing(false);
           if (updatedCards.every(c => c.isMatched)) setStatus(GameStatus.FINISHED);
-        }, 600);
+        }, 400); // Speed up match feel
       } else {
         setTimeout(() => {
           playSfx(mismatchSfx.current);
@@ -294,157 +295,94 @@ const App: React.FC = () => {
     }
   };
 
-  const clearAllGameData = () => {
-    if (confirm(t('confirmClear'))) {
-      localStorage.removeItem('memory_game_best_time');
-      localStorage.removeItem('memory_game_history');
-      setBestTime(null);
-      setHistory([]);
-      speak(t('clearSuccess'));
-      alert(t('clearSuccess'));
-    }
-  };
-
-  const clearMatchHistory = () => {
-    setHistory([]);
-    localStorage.removeItem('memory_game_history');
-    speak(t('clear'));
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const text = e.dataTransfer.getData('text');
+    if (text) setCustomTheme(text);
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center py-12 px-4 relative">
-      <div className="flex-1 flex items-center justify-center w-full">
+    <div className="min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 lg:p-12 relative overflow-hidden">
+      <div className="w-full max-w-6xl flex-1 flex items-center justify-center">
         {status === GameStatus.SETUP && (
-          <div className="max-w-xl w-full mx-auto bg-slate-800/80 backdrop-blur-xl p-8 rounded-[2rem] shadow-2xl border border-white/10 animate-fade-in overflow-hidden relative">
+          <div className="max-w-xl w-full mx-auto bg-slate-800/90 backdrop-blur-2xl p-6 sm:p-8 rounded-[2rem] shadow-2xl border border-white/10 animate-fade-in relative">
             <div className="flex justify-between items-center mb-6">
-              <div className="flex gap-2">
-                {Object.keys(TRANSLATIONS).map(l => (
-                  <button 
-                    key={l} 
-                    onClick={() => { setSettings({...settings, lang: l as LanguageCode}); speak(l); }} 
-                    className={`px-2 py-1 text-xs rounded-md font-bold transition-all ${settings.lang === l ? 'bg-cyan-500 text-white shadow-lg' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}`}
-                  >
-                    {l.toUpperCase()}
-                  </button>
+              <div className="flex gap-1 sm:gap-2">
+                {['he', 'en'].map(l => (
+                  <button key={l} onClick={() => setSettings({...settings, lang: l as LanguageCode})} className={`px-2 py-1 text-[10px] rounded-md font-bold transition-all ${settings.lang === l ? 'bg-cyan-500 text-white' : 'bg-slate-700 text-slate-300'}`}>{l.toUpperCase()}</button>
                 ))}
               </div>
               <div className="flex gap-3 items-center">
-                <button 
-                  onClick={() => setIsMuted(!isMuted)} 
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${!isMuted ? 'bg-cyan-500 text-white shadow-lg rotate-12' : 'bg-slate-700 text-slate-400'}`}
-                >
-                  <i className={`fas ${isMuted ? 'fa-volume-mute' : 'fa-volume-up'}`}></i>
-                </button>
+                <button onClick={() => setIsMuted(!isMuted)} className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all ${!isMuted ? 'bg-cyan-500 text-white' : 'bg-slate-700 text-slate-400'}`}><i className={`fas ${isMuted ? 'fa-volume-mute' : 'fa-volume-up'}`}></i></button>
                 <div className="flex gap-2">
-                  <button onClick={() => { setSettings({...settings, uiTheme: 'dark'}); speak('Dark'); }} className="w-6 h-6 rounded-full bg-slate-900 border border-white/20 shadow-inner"></button>
-                  <button onClick={() => { setSettings({...settings, uiTheme: 'bright'}); speak('Bright'); }} className="w-6 h-6 rounded-full bg-white border border-slate-300 shadow-inner"></button>
-                  <button onClick={() => { setSettings({...settings, uiTheme: 'colorful'}); speak('Colorful'); }} className="w-6 h-6 rounded-full bg-gradient-to-r from-pink-500 to-yellow-500 shadow-inner"></button>
+                  <button onClick={() => setSettings({...settings, uiTheme: 'dark'})} className="w-5 h-5 rounded-full bg-slate-900 border border-white/20"></button>
+                  <button onClick={() => setSettings({...settings, uiTheme: 'bright'})} className="w-5 h-5 rounded-full bg-white border border-slate-300"></button>
+                  <button onClick={() => setSettings({...settings, uiTheme: 'colorful'})} className="w-5 h-5 rounded-full bg-gradient-to-r from-pink-500 to-yellow-500"></button>
                 </div>
               </div>
             </div>
 
             {!showHistory ? (
               <div className="animate-fade-in">
-                <h1 className="text-4xl font-black mb-8 text-center bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent drop-shadow-sm">{t('title')}</h1>
+                <h1 className="text-3xl sm:text-4xl font-black mb-8 text-center bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">{t('title')}</h1>
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-bold mb-3 opacity-70">{t('theme')}</label>
-                    <div className="grid grid-cols-3 gap-2">
+                    <label className="block text-xs font-bold mb-3 opacity-70 uppercase tracking-widest">{t('theme')}</label>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {THEME_OPTIONS.map(opt => (
-                        <button 
-                          key={opt} 
-                          onClick={() => { setSettings({...settings, theme: opt}); setCustomTheme(''); speak(t(`themes.${opt}`)); }} 
-                          className={`py-2 rounded-xl border-2 transition-all ${settings.theme === opt && !customTheme ? 'border-cyan-500 bg-cyan-500/10 shadow-sm' : 'border-slate-700 text-slate-400 hover:border-slate-500'}`}
-                        >
-                          {t(`themes.${opt}`)}
-                        </button>
+                        <button key={opt} onClick={() => { setSettings({...settings, theme: opt}); setCustomTheme(''); }} className={`py-2 px-1 text-sm rounded-xl border-2 transition-all ${settings.theme === opt && !customTheme ? 'border-cyan-500 bg-cyan-500/10' : 'border-slate-700 text-slate-400'}`}>{t(`themes.${opt}`)}</button>
                       ))}
-                      <div className="col-span-1 relative flex items-center">
+                      <div className="col-span-1 sm:col-span-1 relative flex items-center">
                         <input 
                           type="text" placeholder={t('custom')} value={customTheme} 
                           onChange={(e) => setCustomTheme(e.target.value)} 
-                          className={`w-full py-2 pl-3 pr-8 rounded-xl border-2 bg-transparent focus:outline-none transition-all ${customTheme ? 'border-cyan-500' : 'border-slate-700'}`}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDrop={handleDrop}
+                          className={`w-full py-2 pl-3 pr-8 rounded-xl border-2 bg-transparent text-sm focus:outline-none transition-all ${customTheme ? 'border-cyan-500' : 'border-slate-700'}`}
                         />
                         {customTheme && <button onClick={() => setCustomTheme('')} className="absolute right-2 text-slate-500 hover:text-white"><i className="fas fa-times-circle"></i></button>}
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex gap-8 items-end">
-                     <div className="flex-1">
-                       <label className="block text-sm font-bold mb-3 opacity-70">{t('pairs')}: {settings.pairsCount}</label>
-                       <input 
-                          type="range" min="6" max="24" step="2" value={settings.pairsCount} 
-                          onChange={(e) => setSettings({...settings, pairsCount: parseInt(e.target.value)})} 
-                          className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-500" 
-                       />
+                  <div className="flex flex-col sm:flex-row gap-6 items-center">
+                     <div className="flex-1 w-full">
+                       <label className="block text-xs font-bold mb-3 opacity-70 uppercase">{t('pairs')}: {settings.pairsCount}</label>
+                       <input type="range" min="4" max="24" step="2" value={settings.pairsCount} onChange={(e) => setSettings({...settings, pairsCount: parseInt(e.target.value)})} className="w-full h-2 bg-slate-700 rounded-lg accent-cyan-500 appearance-none cursor-pointer" />
                      </div>
                      <div className="flex gap-2">
                        {(['small', 'medium', 'large'] as FontSize[]).map(f => (
-                         <button key={f} onClick={() => setSettings({...settings, fontSize: f})} className={`w-8 h-8 rounded-lg border-2 flex items-center justify-center font-bold transition-all ${settings.fontSize === f ? 'border-cyan-500 text-cyan-500 bg-cyan-500/5 shadow-md' : 'border-slate-700 text-slate-500 hover:border-slate-600'}`}>
-                           {f[0].toUpperCase()}
-                         </button>
+                         <button key={f} onClick={() => setSettings({...settings, fontSize: f})} className={`w-8 h-8 rounded-lg border-2 flex items-center justify-center font-bold text-xs ${settings.fontSize === f ? 'border-cyan-500 text-cyan-500 bg-cyan-500/5' : 'border-slate-700 text-slate-500'}`}>{f[0].toUpperCase()}</button>
                        ))}
                      </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-bold mb-3 opacity-70">{t('players')}</label>
-                    <div className="flex gap-4">
-                      <button onClick={() => { setSettings({...settings, playersCount: 1}); speak(t('single')); }} className={`flex-1 py-4 rounded-2xl border-2 transition-all flex items-center justify-center gap-2 ${settings.playersCount === 1 ? 'border-cyan-500 bg-cyan-500/20 shadow-md' : 'border-slate-700'}`}>
-                        <i className="fas fa-user"></i> {t('single')}
-                      </button>
-                      <button onClick={() => { setSettings({...settings, playersCount: 2}); speak(t('multi')); }} className={`flex-1 py-4 rounded-2xl border-2 transition-all flex items-center justify-center gap-2 ${settings.playersCount === 2 ? 'border-cyan-500 bg-cyan-500/20 shadow-md' : 'border-slate-700'}`}>
-                        <i className="fas fa-users"></i> {t('multi')}
-                      </button>
-                    </div>
+                  <div className="flex gap-2">
+                    <button onClick={() => setSettings({...settings, playersCount: 1})} className={`flex-1 py-3 rounded-2xl border-2 text-sm font-bold transition-all ${settings.playersCount === 1 ? 'border-cyan-500 bg-cyan-500/20' : 'border-slate-700'}`}><i className="fas fa-user mr-2"></i> {t('single')}</button>
+                    <button onClick={() => setSettings({...settings, playersCount: 2})} className={`flex-1 py-3 rounded-2xl border-2 text-sm font-bold transition-all ${settings.playersCount === 2 ? 'border-cyan-500 bg-cyan-500/20' : 'border-slate-700'}`}><i className="fas fa-users mr-2"></i> {t('multi')}</button>
                   </div>
 
-                  <div className="flex gap-2">
-                    <button onClick={startGame} className="flex-[3] py-5 bg-gradient-to-r from-cyan-600 to-indigo-600 rounded-2xl text-xl font-black shadow-xl hover:scale-[1.02] transition-all transform active:scale-95 text-white">{t('start')}</button>
-                    <button onClick={() => { setShowHistory(true); speak(t('history')); }} className="flex-1 py-5 bg-slate-700/50 hover:bg-slate-700 rounded-2xl border border-white/5 transition-all text-white/70"><i className="fas fa-history text-xl"></i></button>
-                  </div>
-                  
-                  <div className="pt-4 border-t border-white/5 flex justify-center">
-                    <button 
-                      onClick={clearAllGameData}
-                      className="text-[10px] font-bold text-red-400/50 hover:text-red-400 uppercase tracking-widest transition-colors flex items-center gap-2 p-2 rounded-lg hover:bg-red-500/5"
-                    >
-                      <i className="fas fa-trash-alt"></i> {t('clearAllData')}
-                    </button>
+                  <div className="flex gap-2 pt-4">
+                    <button onClick={startGame} className="flex-[3] py-4 bg-gradient-to-r from-cyan-600 to-indigo-600 rounded-2xl text-lg font-black shadow-xl hover:scale-[1.02] transition-all text-white">{t('start')}</button>
+                    <button onClick={() => setShowHistory(true)} className="flex-1 py-4 bg-slate-700/50 rounded-2xl text-white/70"><i className="fas fa-history"></i></button>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="animate-fade-in flex flex-col h-[500px]">
+              <div className="animate-fade-in flex flex-col h-[400px]">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-black">{t('history')}</h2>
-                  <button onClick={() => setShowHistory(false)} className="text-slate-400 hover:text-white"><i className="fas fa-times text-xl"></i></button>
+                  <h2 className="text-xl font-black uppercase tracking-widest">{t('history')}</h2>
+                  <button onClick={() => setShowHistory(false)} className="text-slate-400"><i className="fas fa-times"></i></button>
                 </div>
                 <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
                   {history.length === 0 ? <p className="text-center opacity-40 mt-10 italic">{t('noHistory')}</p> : history.map(entry => (
-                    <div key={entry.id} className="bg-white/5 p-4 rounded-2xl border border-white/5 flex flex-col gap-2">
-                       <div className="flex justify-between text-[10px] opacity-40 font-bold"><span>{entry.date}</span><span>{entry.theme}</span></div>
-                       <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-3">
-                            <div className="text-center">
-                              <p className="text-[8px] opacity-30">P1</p>
-                              <p className={`text-xl font-black ${entry.p1Score > entry.p2Score ? 'text-cyan-400' : ''}`}>{entry.p1Score}</p>
-                            </div>
-                            <span className="opacity-20">VS</span>
-                            <div className="text-center">
-                              <p className="text-[8px] opacity-30">P2</p>
-                              <p className={`text-xl font-black ${entry.p2Score > entry.p1Score ? 'text-indigo-400' : ''}`}>{entry.p2Score}</p>
-                            </div>
-                          </div>
-                          <div className="text-right"><p className="text-[8px] opacity-30">{t('time')}</p><p className="text-sm font-mono font-bold">{formatTime(entry.duration)}</p></div>
-                       </div>
+                    <div key={entry.id} className="bg-white/5 p-4 rounded-xl border border-white/5 text-xs">
+                       <div className="flex justify-between opacity-40 mb-2"><span>{entry.date}</span><span>{entry.theme}</span></div>
+                       <div className="flex justify-between font-bold"><span>P1: {entry.p1Score} | P2: {entry.p2Score}</span><span>{formatTime(entry.duration)}</span></div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-6">
-                  <button onClick={clearMatchHistory} disabled={history.length === 0} className="w-full py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold rounded-xl border border-red-500/20 disabled:opacity-20">{t('clearHistory')}</button>
-                </div>
+                <button onClick={() => { if(confirm(t('confirmClear'))) { localStorage.clear(); setHistory([]); setBestTime(null); } }} className="mt-4 text-[10px] text-red-400 font-bold uppercase tracking-widest">{t('clearAllData')}</button>
               </div>
             )}
           </div>
@@ -452,124 +390,70 @@ const App: React.FC = () => {
 
         {status === GameStatus.LOADING && (
           <div className="text-center p-12 max-w-md w-full animate-fade-in">
-            <div className="relative w-32 h-32 mx-auto mb-10">
-              <div className="absolute inset-0 border-8 border-indigo-500/10 rounded-full animate-pulse"></div>
-              <div className="absolute inset-0 border-8 border-t-cyan-500 rounded-full animate-spin-slow"></div>
-              <div className="absolute inset-4 bg-gradient-to-tr from-indigo-600 to-cyan-500 rounded-full shadow-2xl flex items-center justify-center">
-                <i className="fas fa-brain text-white text-3xl animate-pulse"></i>
-              </div>
+            <div className="relative w-24 h-24 mx-auto mb-8">
+              <div className="absolute inset-0 border-4 border-indigo-500/10 rounded-full animate-pulse"></div>
+              <div className="absolute inset-0 border-4 border-t-cyan-500 rounded-full animate-spin"></div>
             </div>
-            <h2 className="text-2xl font-bold mb-4 text-white">{t('loading')}</h2>
-            <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden mb-4 border border-white/5">
-              <div className="h-full bg-gradient-to-r from-cyan-500 to-indigo-500 transition-all duration-500" style={{ width: `${loadingProgress}%` }}></div>
-            </div>
-            <p className="text-slate-400 text-sm font-mono">{loadingText}</p>
+            <h2 className="text-xl font-bold mb-4">{t('loading')}</h2>
+            <p className="text-slate-500 text-xs font-mono">{loadingText}</p>
           </div>
         )}
 
         {status === GameStatus.PLAYING && (
-          <div className="w-full max-w-6xl animate-fade-in">
-             <div className="flex justify-between items-center mb-8 bg-slate-800/40 p-6 rounded-3xl backdrop-blur-xl border border-white/5 shadow-2xl relative overflow-hidden">
-               <div className="flex gap-4">
-                  <div className={`relative p-4 rounded-2xl text-center min-w-[120px] transition-all duration-500 ${currentPlayerIndex === 0 && settings.playersCount === 2 ? 'bg-cyan-500/20 ring-4 ring-cyan-500 scale-110 shadow-[0_0_20px_rgba(34,211,238,0.4)]' : 'bg-slate-700/50 opacity-60'}`}>
-                    <p className="text-[10px] uppercase font-black opacity-40">{t('player1')}</p>
-                    <p className="text-3xl font-black">{players[0].score}</p>
-                    {currentPlayerIndex === 0 && settings.playersCount === 2 && (
-                      <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-cyan-500 text-white text-[8px] px-2 py-0.5 rounded-full font-black animate-pulse">
-                        {t('activeTurn')}
-                      </div>
-                    )}
+          <div className="w-full flex flex-col h-full max-h-[90vh]">
+             <div className="flex justify-between items-center mb-4 bg-slate-800/40 p-4 rounded-2xl border border-white/5 backdrop-blur-md">
+                <div className="flex gap-2">
+                  <div className={`px-4 py-2 rounded-xl text-center transition-all ${currentPlayerIndex === 0 && settings.playersCount === 2 ? 'ring-2 ring-cyan-500 bg-cyan-500/10' : 'bg-slate-700/50'}`}>
+                    <p className="text-[8px] uppercase font-black opacity-40">{t('player1')}</p>
+                    <p className="text-xl font-black">{players[0].score}</p>
                   </div>
                   {settings.playersCount === 2 && (
-                    <div className={`relative p-4 rounded-2xl text-center min-w-[120px] transition-all duration-500 ${currentPlayerIndex === 1 ? 'bg-indigo-500/20 ring-4 ring-indigo-500 scale-110 shadow-[0_0_20px_rgba(99,102,241,0.4)]' : 'bg-slate-700/50 opacity-60'}`}>
-                      <p className="text-[10px] uppercase font-black opacity-40">{t('player2')}</p>
-                      <p className="text-3xl font-black">{players[1].score}</p>
-                      {currentPlayerIndex === 1 && (
-                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-indigo-500 text-white text-[8px] px-2 py-0.5 rounded-full font-black animate-pulse">
-                          {t('activeTurn')}
-                        </div>
-                      )}
+                    <div className={`px-4 py-2 rounded-xl text-center transition-all ${currentPlayerIndex === 1 ? 'ring-2 ring-indigo-500 bg-indigo-500/10' : 'bg-slate-700/50'}`}>
+                      <p className="text-[8px] uppercase font-black opacity-40">{t('player2')}</p>
+                      <p className="text-xl font-black">{players[1].score}</p>
                     </div>
                   )}
-               </div>
-               <div className="flex flex-col items-center">
-                  <div className="font-mono text-4xl font-black bg-black/40 px-8 py-3 rounded-2xl tabular-nums shadow-inner border border-white/5">{formatTime(seconds)}</div>
-                  {settings.playersCount === 1 && bestTime !== null && <p className="text-[10px] mt-2 font-bold uppercase tracking-widest text-cyan-500/50">{t('bestTime')}: {formatTime(bestTime)}</p>}
-               </div>
-               <div className="flex gap-3">
-                 <button onClick={() => setIsMuted(!isMuted)} className={`p-3 rounded-xl transition-all ${!isMuted ? 'bg-cyan-500 text-white shadow-lg' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`}>
-                   <i className={`fas ${isMuted ? 'fa-volume-mute' : 'fa-volume-up'}`}></i>
-                 </button>
-                 <button onClick={() => setStatus(GameStatus.SETUP)} className="p-3 bg-slate-700 hover:bg-slate-600 rounded-xl transition-all"><i className="fas fa-home"></i></button>
-               </div>
+                </div>
+                <div className="font-mono text-2xl font-black bg-black/40 px-4 py-2 rounded-xl tabular-nums shadow-inner border border-white/5">{formatTime(seconds)}</div>
+                <button onClick={() => setStatus(GameStatus.SETUP)} className="w-10 h-10 bg-slate-700 hover:bg-slate-600 rounded-xl flex items-center justify-center transition-all"><i className="fas fa-home"></i></button>
              </div>
-             <div className={`grid gap-4 sm:gap-6 ${settings.pairsCount > 15 ? 'grid-cols-4 sm:grid-cols-6 lg:grid-cols-10' : settings.pairsCount > 12 ? 'grid-cols-4 sm:grid-cols-6 lg:grid-cols-8' : 'grid-cols-3 sm:grid-cols-4 lg:grid-cols-6'}`}>
-                {cards.map(c => <CardComponent key={c.id} card={c} onClick={handleCardClick} disabled={isProcessing} />)}
+             
+             {/* Scrollable Game Board */}
+             <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+               <div className="game-grid pb-12">
+                  {cards.map(c => <CardComponent key={c.id} card={c} onClick={handleCardClick} disabled={isProcessing} />)}
+               </div>
              </div>
           </div>
         )}
 
         {status === GameStatus.FINISHED && (
-          <div className="max-w-md w-full bg-slate-800 p-10 rounded-[2.5rem] text-center shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] border border-white/10 relative overflow-hidden animate-fade-in">
-            {isNewRecord && <div className="absolute top-6 right-6 bg-yellow-400 text-black px-4 py-2 rounded-full text-xs font-black animate-bounce shadow-xl">{t('newRecord')}</div>}
-            <div className="text-7xl mb-6">🏆</div>
-            <h2 className="text-4xl font-black mb-10 text-white">
+          <div className="max-w-md w-full bg-slate-800 p-8 rounded-[2rem] text-center shadow-2xl border border-white/10 animate-fade-in">
+            <div className="text-6xl mb-4">🏆</div>
+            <h2 className="text-3xl font-black mb-6">
               {settings.playersCount === 2 
                 ? (players[0].score > players[1].score ? `${t('player1')} 👑` : players[1].score > players[0].score ? `${t('player2')} 👑` : t('draw')) 
-                : 'CONGRATS!'}
+                : 'Well Done!'}
             </h2>
-            
-            <div className="bg-black/30 backdrop-blur-md p-8 rounded-3xl mb-10 flex flex-col gap-6 border border-white/5 shadow-inner">
-               {settings.playersCount === 2 ? (
-                 <div className="flex justify-around items-center py-4 px-2 bg-white/5 rounded-2xl border border-white/5">
-                    <div className="text-center">
-                      <p className="text-[10px] font-black uppercase opacity-30 mb-3">{t('player1')}</p>
-                      <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition-all duration-700 ${players[0].score > players[1].score ? 'border-cyan-500 bg-cyan-500/20 scale-110 shadow-[0_0_25px_rgba(34,211,238,0.5)]' : 'border-slate-700'}`}>
-                        {players[0].score}
-                      </div>
-                    </div>
-                    <div className="text-3xl font-black opacity-10 mx-2 italic">VS</div>
-                    <div className="text-center">
-                      <p className="text-[10px] font-black uppercase opacity-30 mb-3">{t('player2')}</p>
-                      <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition-all duration-700 ${players[1].score > players[0].score ? 'border-indigo-500 bg-indigo-500/20 scale-110 shadow-[0_0_25px_rgba(99,102,241,0.5)]' : 'border-slate-700'}`}>
-                        {players[1].score}
-                      </div>
-                    </div>
-                 </div>
-               ) : null}
-
-               <div className="flex justify-around items-center border-t border-white/5 pt-6">
-                 <div className="text-center">
-                   <p className="text-[10px] font-black uppercase opacity-30 mb-1">{t('time')}</p>
-                   <p className="text-3xl font-black tabular-nums">{formatTime(seconds)}</p>
-                 </div>
-                 <div className="w-px h-12 bg-white/10"></div>
-                 <div className="text-center">
-                   <p className="text-[10px] font-black uppercase opacity-30 mb-1">{t('theme')}</p>
-                   <p className="text-xl font-bold truncate max-w-[120px] text-indigo-400">{customTheme || t(`themes.${settings.theme}`)}</p>
-                 </div>
+            <div className="bg-black/30 p-6 rounded-2xl mb-8 flex justify-around">
+               <div className="text-center">
+                 <p className="text-[10px] uppercase opacity-30">{t('time')}</p>
+                 <p className="text-2xl font-black">{formatTime(seconds)}</p>
                </div>
-               
                {settings.playersCount === 1 && (
-                 <div className="pt-6 border-t border-white/5">
-                   <p className="text-[10px] font-black uppercase opacity-30 mb-1">{t('bestTime')}</p>
-                   <p className="text-2xl font-black text-cyan-400 tabular-nums">{formatTime(bestTime || seconds)}</p>
+                 <div className="text-center">
+                   <p className="text-[10px] uppercase opacity-30">{t('bestTime')}</p>
+                   <p className="text-2xl font-black text-cyan-400">{formatTime(bestTime || seconds)}</p>
                  </div>
                )}
             </div>
-            
-            <button onClick={() => { setStatus(GameStatus.SETUP); speak(t('playAgain')); }} className="w-full py-5 bg-gradient-to-r from-cyan-600 to-indigo-600 rounded-2xl font-black text-xl shadow-2xl hover:scale-[1.05] transition-all transform active:scale-95 text-white">{t('playAgain')}</button>
+            <button onClick={() => setStatus(GameStatus.SETUP)} className="w-full py-4 bg-gradient-to-r from-cyan-600 to-indigo-600 rounded-xl font-black text-white">{t('playAgain')}</button>
           </div>
         )}
       </div>
 
-      <footer className="mt-16 text-center text-[10px] font-bold opacity-30 space-y-3 tracking-widest uppercase">
-         <p>&copy; Noam Gold AI 2026 | {t('feedback')}: <a href="mailto:goldnoamai@gmail.com" className="underline hover:text-cyan-400 transition-colors">goldnoamai@gmail.com</a></p>
-         <div className="flex justify-center gap-6 text-base">
-            <i className="fab fa-accessible-icon" title="Accessibility Support"></i>
-            <i className="fas fa-brain" title="Memory Training"></i>
-            <i className="fas fa-wifi" title="Offline Ready"></i>
-         </div>
+      <footer className="mt-8 text-center text-[8px] sm:text-[10px] font-bold opacity-30 tracking-widest uppercase pb-4">
+         <p>&copy; Noam Gold AI 2026 | Feedback: <a href="mailto:goldnoamai@gmail.com" className="underline">goldnoamai@gmail.com</a></p>
       </footer>
     </div>
   );
