@@ -59,7 +59,7 @@ body {
 .animate-spin-slow { animation: rotate 3s linear infinite; }
 
 button:focus-visible, input:focus-visible {
-    @apply outline outline-3 outline-offset-2;
+    @apply outline outline-2 outline-offset-2;
     outline-color: var(--primary-accent);
 }
 
