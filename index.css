@@ -1,0 +1,81 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --bg-color: #0f172a;
+    --text-color: #f1f5f9;
+    --primary-accent: #22d3ee;
+    --secondary-accent: #6366f1;
+    --card-back: linear-gradient(to bottom right, #4f46e5, #7e22ce);
+    --font-size-base: 16px;
+}
+
+[data-theme='bright'] {
+    --bg-color: #f8fafc;
+    --text-color: #1e293b;
+    --primary-accent: #0ea5e9;
+    --secondary-accent: #8b5cf6;
+    --card-back: linear-gradient(to bottom right, #3b82f6, #6366f1);
+}
+
+[data-theme='colorful'] {
+    --bg-color: #4c1d95;
+    --text-color: #fff;
+    --primary-accent: #facc15;
+    --secondary-accent: #ec4899;
+    --card-back: linear-gradient(to bottom right, #db2777, #f59e0b);
+}
+
+[data-font-size='small'] { --font-size-base: 14px; }
+[data-font-size='medium'] { --font-size-base: 16px; }
+[data-font-size='large'] { --font-size-base: 18px; }
+
+body {
+    font-family: 'Assistant', 'Heebo', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: var(--font-size-base);
+    transition: background-color 0.3s ease, color 0.3s ease, font-size 0.2s ease;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.perspective-1000 { perspective: 1000px; }
+.preserve-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; }
+.rotate-y-180 { transform: rotateY(180deg); }
+
+@keyframes match-pulse {
+    0% { transform: scale(1) rotateY(180deg); filter: brightness(1) drop-shadow(0 0 0px var(--primary-accent)); }
+    50% { transform: scale(1.1) rotateY(180deg); filter: brightness(1.5) drop-shadow(0 0 20px var(--primary-accent)); }
+    100% { transform: scale(1) rotateY(180deg); filter: brightness(1) drop-shadow(0 0 0px var(--primary-accent)); }
+}
+.animate-match { animation: match-pulse 0.6s ease-out forwards; }
+
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+.animate-spin-slow { animation: rotate 3s linear infinite; }
+
+button:focus-visible, input:focus-visible {
+    @apply outline outline-3 outline-offset-2;
+    outline-color: var(--primary-accent);
+}
+
+.ads-container {
+    @apply my-5 min-h-[90px] flex items-center justify-center rounded-lg text-[10px] text-gray-500;
+    background: rgba(0,0,0,0.1);
+    border: 1px dashed rgba(255,255,255,0.1);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}

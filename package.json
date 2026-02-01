@@ -1,0 +1,16 @@
+
+{
+  "name": "memory-lotto-master-ai",
+  "version": "1.0.0",
+  "description": "AI Memory Lotto game refactored for production",
+  "dependencies": {
+    "@google/genai": "^1.39.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35"
+  }
+}

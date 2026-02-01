@@ -1,0 +1,9 @@
+{
+  "name": "Memory Lotto Master AI",
+  "description": "High-end memory game with Gemini AI-generated thematic images, multiplayer support, and accessibility features.",
+  "requestFramePermissions": [],
+  "short_name": "ML Lotto",
+  "theme_color": "#0f172a",
+  "background_color": "#0f172a",
+  "display": "standalone"
+}
