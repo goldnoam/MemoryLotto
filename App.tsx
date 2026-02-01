@@ -104,6 +104,12 @@ const App: React.FC = () => {
   
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  
+  // Sound effects refs
+  const flipSfx = useRef<HTMLAudioElement | null>(null);
+  const matchSfx = useRef<HTMLAudioElement | null>(null);
+  const mismatchSfx = useRef<HTMLAudioElement | null>(null);
+  const winSfx = useRef<HTMLAudioElement | null>(null);
 
   const [bestTime, setBestTime] = useState<number | null>(() => {
     const saved = localStorage.getItem('memory_game_best_time');
@@ -118,10 +124,18 @@ const App: React.FC = () => {
   const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
+    // Ambient Music
     const audio = new Audio('https://assets.mixkit.co/music/preview/mixkit-ambient-tech-lounge-425.mp3');
     audio.loop = true;
-    audio.volume = 0.3;
+    audio.volume = 0.2;
     audioRef.current = audio;
+
+    // SFX Initialization
+    flipSfx.current = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-card-flip-607.mp3');
+    matchSfx.current = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-reward-952.mp3');
+    mismatchSfx.current = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3');
+    winSfx.current = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3');
+
     return () => {
       audio.pause();
       audioRef.current = null;
@@ -158,6 +172,13 @@ const App: React.FC = () => {
     }
   };
 
+  const playSfx = (audio: HTMLAudioElement | null) => {
+    if (audio && !isMuted) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }
+  };
+
   const formatTime = (totalSeconds: number) => {
     const mins = Math.floor(totalSeconds / 60);
     const secs = totalSeconds % 60;
@@ -175,6 +196,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (status === GameStatus.FINISHED) {
+      playSfx(winSfx.current);
       if (settings.playersCount === 1) {
         if (bestTime === null || seconds < bestTime) {
           setBestTime(seconds);
@@ -230,6 +252,7 @@ const App: React.FC = () => {
     const clickedCardIdx = cards.findIndex(c => c.id === id);
     if (flippedIndices.length >= 2 || flippedIndices.includes(clickedCardIdx)) return;
 
+    playSfx(flipSfx.current);
     const newFlipped = [...flippedIndices, clickedCardIdx];
     setFlippedIndices(newFlipped);
     setCards(prev => prev.map((card, idx) => idx === clickedCardIdx ? { ...card, isFlipped: true } : card));
@@ -239,6 +262,7 @@ const App: React.FC = () => {
       const [i1, i2] = newFlipped;
       if (cards[i1].pairId === cards[i2].pairId) {
         setTimeout(() => {
+          playSfx(matchSfx.current);
           const updatedCards = cards.map((c, idx) => 
             (idx === i1 || idx === i2) ? { ...c, isMatched: true } : c
           );
@@ -254,6 +278,7 @@ const App: React.FC = () => {
         }, 600);
       } else {
         setTimeout(() => {
+          playSfx(mismatchSfx.current);
           setCards(prev => prev.map((c, idx) => newFlipped.includes(idx) ? { ...c, isFlipped: false } : c));
           if (settings.playersCount === 2) {
             const nextIdx = currentPlayerIndex === 0 ? 1 : 0;
