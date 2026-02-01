@@ -12,7 +12,7 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     multi: 'שני שחקנים',
     start: 'התחל משחק',
     theme: 'נושא',
-    loading: 'מכין את העולם עבורך...',
+    loading: 'מכין את הלוח עבורך...',
     mainMenu: 'תפריט ראשי',
     player1: 'שחקן 1',
     player2: 'שחקן 2',
@@ -48,7 +48,7 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     multi: 'Two Players',
     start: 'Start Game',
     theme: 'Theme',
-    loading: 'Creating worlds for you...',
+    loading: 'Preparing board...',
     mainMenu: 'Main Menu',
     player1: 'Player 1',
     player2: 'Player 2',
@@ -76,11 +76,11 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     activeTurn: 'Your Turn!',
     themes: { animals: 'Animals', space: 'Space', food: 'Food', nature: 'Nature', robots: 'Robots' }
   },
-  zh: { title: '记忆大师', start: '开始游戏', theme: '主题', loading: '正在为您创造世界...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史', activeTurn: '轮到你了！', clearAllData: '清除所有数据', confirmClear: '您确定要删除所有历史记录吗？' },
-  hi: { title: 'मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'आपके लिए दुनिया बना रहा है...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: ' संगीत', history: 'मैच इतिहास', activeTurn: 'आपकी बारी!', clearAllData: 'सभी डेटा साफ़ करें', confirmClear: 'क्या आप वाकई सारा डेटा हटाना चाहते हैं?' },
-  de: { title: 'Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Erschafft Welten für dich...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf', activeTurn: 'Du bist dran!', clearAllData: 'Alle Daten löschen', confirmClear: 'Sind Sie sicher, dass Sie alle Daten löschen möchten?' },
-  es: { title: 'Maestro de Memoria', start: 'Empezar Juego', theme: 'Tema', loading: 'Creando mundos para ti...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Tu turno!', clearAllData: 'Borrar todos los datos', confirmClear: '¿Estás seguro de que quieres borrar todos los datos?' },
-  fr: { title: 'Maître de Mémoire', start: 'Démarrer', theme: 'Thème', loading: 'Création de mondes pour vous...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !', clearAllData: 'Effacer toutes les données', confirmClear: 'Êtes-vous sûr de vouloir supprimer toutes les données ?' }
+  zh: { title: '记忆大师', start: '开始游戏', theme: '主题', loading: '正在准备...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史', activeTurn: '轮到你了！', clearAllData: '清除所有数据', confirmClear: '您确定要删除所有历史记录吗？' },
+  hi: { title: 'मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'तैयारी...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: ' संगीत', history: 'मैच इतिहास', activeTurn: 'आपकी बारी!', clearAllData: 'सभी डेटा साफ़ करें', confirmClear: 'क्या आप वाकई सारा डेटा हटाना चाहते हैं?' },
+  de: { title: 'Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Vorbereitung...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf', activeTurn: 'Du bist dran!', clearAllData: 'Alle Daten löschen', confirmClear: 'Sind Sie sicher, dass Sie alle Daten löschen möchten?' },
+  es: { title: 'Maestro de Memoria', start: 'Empezar Juego', theme: 'Tema', loading: 'Preparando...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Tu turno!', clearAllData: 'Borrar todos los datos', confirmClear: '¿Estás seguro de que quieres borrar todos los datos?' },
+  fr: { title: 'Maître de Mémoire', start: 'Démarrer', theme: 'Thème', loading: 'Préparation...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !', clearAllData: 'Effacer toutes les données', confirmClear: 'Êtes-vous sûr de vouloir supprimer toutes les données ?' }
 };
 
 const THEME_OPTIONS = ['animals', 'space', 'food', 'nature', 'robots'];
