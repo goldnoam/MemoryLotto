@@ -7,7 +7,7 @@
     --bg-color: #0f172a;
     --text-color: #f1f5f9;
     --primary-accent: #22d3ee;
-    --secondary-accent: #6366f1;
+    --secondary-accent: #facc15;
     --card-back: linear-gradient(to bottom right, #4f46e5, #7e22ce);
     --font-size-base: 16px;
 }
@@ -16,7 +16,7 @@
     --bg-color: #f8fafc;
     --text-color: #1e293b;
     --primary-accent: #0ea5e9;
-    --secondary-accent: #8b5cf6;
+    --secondary-accent: #eab308;
     --card-back: linear-gradient(to bottom right, #3b82f6, #6366f1);
 }
 
@@ -51,20 +51,11 @@ body {
 /* Match Animation with Glow */
 @keyframes match-glow {
     0% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0px var(--primary-accent); }
-    50% { transform: scale(1.1) rotateY(180deg); box-shadow: 0 0 30px 10px var(--primary-accent); border-color: var(--primary-accent); }
+    50% { transform: scale(1.1) rotateY(180deg); box-shadow: 0 0 40px 15px var(--primary-accent), 0 0 20px 10px var(--secondary-accent); border-color: var(--secondary-accent); }
     100% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0px var(--primary-accent); }
 }
 .animate-match { 
     animation: match-glow 1s ease-out forwards;
-}
-
-@keyframes rotate { 100% { transform: rotate(360deg); } }
-.animate-spin-slow { animation: rotate 3s linear infinite; }
-
-.ads-container {
-    @apply my-5 min-h-[60px] flex items-center justify-center rounded-lg text-[10px] text-gray-500;
-    background: rgba(0,0,0,0.1);
-    border: 1px dashed rgba(255,255,255,0.1);
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -83,17 +74,29 @@ body {
     display: grid;
     gap: 0.75rem;
     width: 100%;
-    grid-template-columns: repeat(2, 1fr); /* Default mobile */
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0 auto;
 }
 
-@media (min-width: 480px) {
+/* Mobile First - Ensure cards are big enough to see */
+@media (min-width: 380px) {
     .game-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-@media (min-width: 768px) {
-    .game-grid { grid-template-columns: repeat(4, 1fr); }
+@media (min-width: 640px) {
+    .game-grid { grid-template-columns: repeat(4, 1fr); gap: 1rem; }
 }
 
 @media (min-width: 1024px) {
     .game-grid { grid-template-columns: repeat(6, 1fr); }
+}
+
+@media (min-width: 1280px) {
+    .game-grid { grid-template-columns: repeat(8, 1fr); }
+}
+
+.ads-container {
+    @apply my-5 min-h-[60px] flex items-center justify-center rounded-lg text-[10px] text-gray-500;
+    background: rgba(0,0,0,0.1);
+    border: 1px dashed rgba(255,255,255,0.1);
 }

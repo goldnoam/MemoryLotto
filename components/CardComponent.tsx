@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Card } from '../types';
 
 interface CardComponentProps {
@@ -9,9 +9,6 @@ interface CardComponentProps {
 }
 
 const CardComponent: React.FC<CardComponentProps> = ({ card, onClick, disabled }) => {
-  // For SVG data URLs, we don't really need the loader logic to be complex
-  const [isLoaded, setIsLoaded] = useState(card.imageUrl.startsWith('data:'));
-
   const handleClick = () => {
     if (!disabled && !card.isFlipped && !card.isMatched) {
       onClick(card.id);
@@ -20,29 +17,26 @@ const CardComponent: React.FC<CardComponentProps> = ({ card, onClick, disabled }
 
   return (
     <div 
-      className={`relative w-full aspect-square perspective-1000 cursor-pointer transition-transform duration-300 ${card.isMatched ? 'z-20' : 'hover:scale-105'}`}
+      className={`relative w-full aspect-square perspective-1000 cursor-pointer transition-transform duration-300 ${card.isMatched ? 'z-20' : 'hover:scale-105 active:scale-95'}`}
       onClick={handleClick}
     >
       <div className={`relative w-full h-full transition-transform duration-500 preserve-3d ${card.isFlipped || card.isMatched ? 'rotate-y-180' : ''} ${card.isMatched ? 'animate-match' : ''}`}>
-        {/* Front Face (Hidden initially) */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rounded-xl bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center border-2 border-white/20 shadow-lg z-10">
-           <i className="fas fa-brain text-white text-2xl sm:text-3xl opacity-30"></i>
+        
+        {/* Front Face (Card Back) */}
+        <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-800 flex items-center justify-center border-2 border-white/20 shadow-lg z-10">
+           <i className="fas fa-brain text-white text-3xl sm:text-4xl opacity-40"></i>
         </div>
 
-        {/* Back Face (The Image) */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-xl overflow-hidden bg-slate-100 border-2 border-indigo-400 shadow-xl z-0 flex items-center justify-center p-2">
-          {!isLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-slate-800 text-indigo-400/30">
-              <i className="fas fa-circle-notch animate-spin text-xl"></i>
-            </div>
-          )}
+        {/* Back Face (Card Image) */}
+        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl overflow-hidden bg-white border-2 border-indigo-400 shadow-xl z-0 flex items-center justify-center p-3">
           <img 
             src={card.imageUrl} 
             alt="memory card" 
-            onLoad={() => setIsLoaded(true)}
-            className={`w-full h-full object-contain transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className="w-full h-full object-contain pointer-events-none"
+            loading="eager"
           />
         </div>
+
       </div>
     </div>
   );
