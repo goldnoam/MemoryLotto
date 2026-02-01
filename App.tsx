@@ -6,14 +6,14 @@ import CardComponent from './components/CardComponent';
 
 const TRANSLATIONS: Record<LanguageCode, any> = {
   he: {
-    title: 'לוטו זיכרון AI',
+    title: 'לוטו זיכרון Master',
     pairs: 'מספר זוגות',
     players: 'מצב משחק',
     single: 'שחקן יחיד',
     multi: 'שני שחקנים',
     start: 'התחל משחק',
     theme: 'נושא',
-    loading: 'Gemini יוצר עבורך עולמות...',
+    loading: 'מכין את העולם עבורך...',
     mainMenu: 'תפריט ראשי',
     player1: 'שחקן 1',
     player2: 'שחקן 2',
@@ -39,14 +39,14 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     themes: { animals: 'חיות', space: 'חלל', food: 'אוכל', nature: 'טבע', robots: 'רובוטים' }
   },
   en: {
-    title: 'AI Memory Master',
+    title: 'Memory Master',
     pairs: 'Number of Pairs',
     players: 'Game Mode',
     single: 'Single Player',
     multi: 'Two Players',
     start: 'Start Game',
     theme: 'Theme',
-    loading: 'Gemini is creating worlds for you...',
+    loading: 'Creating worlds for you...',
     mainMenu: 'Main Menu',
     player1: 'Player 1',
     player2: 'Player 2',
@@ -71,11 +71,11 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     activeTurn: 'Your Turn!',
     themes: { animals: 'Animals', space: 'Space', food: 'Food', nature: 'Nature', robots: 'Robots' }
   },
-  zh: { title: 'AI 记忆大师', start: '开始游戏', theme: '主题', loading: '双子座正在为你创造世界...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史', activeTurn: '轮到你了！' },
-  hi: { title: 'एआई मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'मिथुन आपके लिए दुनिया बना रहा है...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: 'संगीत', history: 'मैच इतिहास', activeTurn: 'आपकी बारी!' },
-  de: { title: 'KI Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Gemini erschafft Welten für dich...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf', activeTurn: 'Du bist dran!' },
-  es: { title: 'Maestro de Memoria IA', start: 'Empezar Juego', theme: 'Tema', loading: 'Gemini está creando mundos para ti...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Tu turno!' },
-  fr: { title: 'Maître de Mémoire IA', start: 'Démarrer', theme: 'Thème', loading: 'Gemini crée des mondes pour vous...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !' }
+  zh: { title: '记忆大师', start: '开始游戏', theme: '主题', loading: '正在为您创造世界...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史', activeTurn: '轮到你了！' },
+  hi: { title: 'मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'आपके लिए दुनिया बना रहा है...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: ' संगीत', history: 'मैच इतिहास', activeTurn: 'आपकी बारी!' },
+  de: { title: 'Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Erschafft Welten für dich...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf', activeTurn: 'Du bist dran!' },
+  es: { title: 'Maestro de Memoria', start: 'Empezar Juego', theme: 'Tema', loading: 'Creando mundos para ti...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Tu turno!' },
+  fr: { title: 'Maître de Mémoire', start: 'Démarrer', theme: 'Thème', loading: 'Création de mondes pour vous...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !' }
 };
 
 const THEME_OPTIONS = ['animals', 'space', 'food', 'nature', 'robots'];
@@ -105,7 +105,6 @@ const App: React.FC = () => {
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
-  // Sound effects refs
   const flipSfx = useRef<HTMLAudioElement | null>(null);
   const matchSfx = useRef<HTMLAudioElement | null>(null);
   const mismatchSfx = useRef<HTMLAudioElement | null>(null);
@@ -124,13 +123,11 @@ const App: React.FC = () => {
   const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // Ambient Music
     const audio = new Audio('https://assets.mixkit.co/music/preview/mixkit-ambient-tech-lounge-425.mp3');
     audio.loop = true;
     audio.volume = 0.2;
     audioRef.current = audio;
 
-    // SFX Initialization
     flipSfx.current = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-card-flip-607.mp3');
     matchSfx.current = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-reward-952.mp3');
     mismatchSfx.current = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3');
