@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { GameStatus, Card, Player, GameSettings, FontSize, LanguageCode, GameHistoryEntry } from './types';
 import { generateThemeImages } from './services/geminiService';
@@ -36,6 +35,7 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     clearHistory: 'מחק היסטוריה',
     clearAllData: 'איפוס כל הנתונים',
     clearSuccess: 'הנתונים אופסו בהצלחה',
+    confirmClear: 'האם אתה בטוח שברצונך למחוק את כל היסטוריית המשחקים והשיאים האישיים?',
     score: 'ניקוד',
     activeTurn: 'תורך!',
     themes: { animals: 'חיות', space: 'חלל', food: 'אוכל', nature: 'טבע', robots: 'רובוטים' }
@@ -71,15 +71,16 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     clearHistory: 'Clear History',
     clearAllData: 'Clear All Data',
     clearSuccess: 'Data cleared successfully',
+    confirmClear: 'Are you sure you want to delete all match history and best times?',
     score: 'Score',
     activeTurn: 'Your Turn!',
     themes: { animals: 'Animals', space: 'Space', food: 'Food', nature: 'Nature', robots: 'Robots' }
   },
-  zh: { title: '记忆大师', start: '开始游戏', theme: '主题', loading: '正在为您创造世界...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史', activeTurn: '轮到你了！', clearAllData: '清除所有数据' },
-  hi: { title: 'मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'आपके लिए दुनिया बना रहा है...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: ' संगीत', history: 'मैच इतिहास', activeTurn: 'आपकी बारी!', clearAllData: 'सभी डेटा साफ़ करें' },
-  de: { title: 'Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Erschafft Welten für dich...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf', activeTurn: 'Du bist dran!', clearAllData: 'Alle Daten löschen' },
-  es: { title: 'Maestro de Memoria', start: 'Empezar Juego', theme: 'Tema', loading: 'Creando mundos para ti...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Tu turno!', clearAllData: 'Borrar todos los datos' },
-  fr: { title: 'Maître de Mémoire', start: 'Démarrer', theme: 'Thème', loading: 'Création de mondes pour vous...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !', clearAllData: 'Effacer toutes les données' }
+  zh: { title: '记忆大师', start: '开始游戏', theme: '主题', loading: '正在为您创造世界...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史', activeTurn: '轮到你了！', clearAllData: '清除所有数据', confirmClear: '您确定要删除所有历史记录吗？' },
+  hi: { title: 'मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'आपके लिए दुनिया बना रहा है...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: ' संगीत', history: 'मैच इतिहास', activeTurn: 'आपकी बारी!', clearAllData: 'सभी डेटा साफ़ करें', confirmClear: 'क्या आप वाकई सारा डेटा हटाना चाहते हैं?' },
+  de: { title: 'Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Erschafft Welten für dich...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf', activeTurn: 'Du bist dran!', clearAllData: 'Alle Daten löschen', confirmClear: 'Sind Sie sicher, dass Sie alle Daten löschen möchten?' },
+  es: { title: 'Maestro de Memoria', start: 'Empezar Juego', theme: 'Tema', loading: 'Creando mundos para ti...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Tu turno!', clearAllData: 'Borrar todos los datos', confirmClear: '¿Estás seguro de que quieres borrar todos los datos?' },
+  fr: { title: 'Maître de Mémoire', start: 'Démarrer', theme: 'Thème', loading: 'Création de mondes pour vous...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !', clearAllData: 'Effacer toutes les données', confirmClear: 'Êtes-vous sûr de vouloir supprimer toutes les données ?' }
 };
 
 const THEME_OPTIONS = ['animals', 'space', 'food', 'nature', 'robots'];
@@ -294,12 +295,13 @@ const App: React.FC = () => {
   };
 
   const clearAllGameData = () => {
-    if (confirm(t('clearAllData') + '?')) {
+    if (confirm(t('confirmClear'))) {
       localStorage.removeItem('memory_game_best_time');
       localStorage.removeItem('memory_game_history');
       setBestTime(null);
       setHistory([]);
       speak(t('clearSuccess'));
+      alert(t('clearSuccess'));
     }
   };
 
@@ -406,7 +408,7 @@ const App: React.FC = () => {
                   <div className="pt-4 border-t border-white/5 flex justify-center">
                     <button 
                       onClick={clearAllGameData}
-                      className="text-[10px] font-bold text-red-400/50 hover:text-red-400 uppercase tracking-widest transition-colors flex items-center gap-2"
+                      className="text-[10px] font-bold text-red-400/50 hover:text-red-400 uppercase tracking-widest transition-colors flex items-center gap-2 p-2 rounded-lg hover:bg-red-500/5"
                     >
                       <i className="fas fa-trash-alt"></i> {t('clearAllData')}
                     </button>
@@ -564,9 +566,9 @@ const App: React.FC = () => {
       <footer className="mt-16 text-center text-[10px] font-bold opacity-30 space-y-3 tracking-widest uppercase">
          <p>&copy; Noam Gold AI 2026 | {t('feedback')}: <a href="mailto:goldnoamai@gmail.com" className="underline hover:text-cyan-400 transition-colors">goldnoamai@gmail.com</a></p>
          <div className="flex justify-center gap-6 text-base">
-            <i className="fab fa-accessible-icon"></i>
-            <i className="fas fa-brain"></i>
-            <i className="fas fa-wifi"></i>
+            <i className="fab fa-accessible-icon" title="Accessibility Support"></i>
+            <i className="fas fa-brain" title="Memory Training"></i>
+            <i className="fas fa-wifi" title="Offline Ready"></i>
          </div>
       </footer>
     </div>
