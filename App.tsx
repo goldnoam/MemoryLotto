@@ -35,6 +35,7 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     noHistory: 'אין היסטוריה עדיין',
     clearHistory: 'מחק היסטוריה',
     score: 'ניקוד',
+    activeTurn: 'תורך!',
     themes: { animals: 'חיות', space: 'חלל', food: 'אוכל', nature: 'טבע', robots: 'רובוטים' }
   },
   en: {
@@ -67,13 +68,14 @@ const TRANSLATIONS: Record<LanguageCode, any> = {
     noHistory: 'No history yet',
     clearHistory: 'Clear History',
     score: 'Score',
+    activeTurn: 'Your Turn!',
     themes: { animals: 'Animals', space: 'Space', food: 'Food', nature: 'Nature', robots: 'Robots' }
   },
-  zh: { title: 'AI 记忆大师', start: '开始游戏', theme: '主题', loading: '双子座正在为你创造世界...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史' },
-  hi: { title: 'एआई मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'मिथुन आपके लिए दुनिया बना रहा है...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: 'संगीत', history: 'मैच इतिहास' },
-  de: { title: 'KI Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Gemini erschafft Welten für dich...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf' },
-  es: { title: 'Maestro de Memoria IA', start: 'Empezar Juego', theme: 'Tema', loading: 'Gemini está creando mundos para ti...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial' },
-  fr: { title: 'Maître de Mémoire IA', start: 'Démarrer', theme: 'Thème', loading: 'Gemini crée des mondes pour vous...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique' }
+  zh: { title: 'AI 记忆大师', start: '开始游戏', theme: '主题', loading: '双子座正在为你创造世界...', bestTime: '最佳时间', newRecord: '新纪录！', music: '音乐', history: '比赛历史', activeTurn: '轮到你了！' },
+  hi: { title: 'एआई मेमोरी मास्टर', start: 'खेल शुरू करें', theme: 'विषय', loading: 'मिथुन आपके लिए दुनिया बना रहा है...', bestTime: 'सर्वश्रेष्ठ समय', newRecord: 'नया रिकॉर्ड!', music: 'संगीत', history: 'मैच इतिहास', activeTurn: 'आपकी बारी!' },
+  de: { title: 'KI Memory Meister', start: 'Spiel starten', theme: 'Thema', loading: 'Gemini erschafft Welten für dich...', bestTime: 'Bestzeit', newRecord: 'Neuer Rekord!', music: 'Musik', history: 'Spielverlauf', activeTurn: 'Du bist dran!' },
+  es: { title: 'Maestro de Memoria IA', start: 'Empezar Juego', theme: 'Tema', loading: 'Gemini está creando mundos para ti...', bestTime: 'Mejor Tiempo', newRecord: '¡Nuevo Récord!', music: 'Música', history: 'Historial', activeTurn: '¡Tu turno!' },
+  fr: { title: 'Maître de Mémoire IA', start: 'Démarrer', theme: 'Thème', loading: 'Gemini crée des mondes pour vous...', bestTime: 'Meilleur Temps', newRecord: 'Nouveau Record!', music: 'Musique', history: 'Historique', activeTurn: 'À toi !' }
 };
 
 const THEME_OPTIONS = ['animals', 'space', 'food', 'nature', 'robots'];
@@ -253,7 +255,11 @@ const App: React.FC = () => {
       } else {
         setTimeout(() => {
           setCards(prev => prev.map((c, idx) => newFlipped.includes(idx) ? { ...c, isFlipped: false } : c));
-          if (settings.playersCount === 2) setCurrentPlayerIndex(prev => (prev === 0 ? 1 : 0));
+          if (settings.playersCount === 2) {
+            const nextIdx = currentPlayerIndex === 0 ? 1 : 0;
+            setCurrentPlayerIndex(nextIdx);
+            speak(t('activeTurn'));
+          }
           setFlippedIndices([]);
           setIsProcessing(false);
         }, 1000);
@@ -416,25 +422,35 @@ const App: React.FC = () => {
 
         {status === GameStatus.PLAYING && (
           <div className="w-full max-w-6xl animate-fade-in">
-             <div className="flex justify-between items-center mb-8 bg-slate-800/40 p-6 rounded-3xl backdrop-blur-xl border border-white/5 shadow-2xl">
+             <div className="flex justify-between items-center mb-8 bg-slate-800/40 p-6 rounded-3xl backdrop-blur-xl border border-white/5 shadow-2xl relative overflow-hidden">
                <div className="flex gap-4">
-                  <div className={`p-4 rounded-2xl text-center min-w-[100px] transition-all ${currentPlayerIndex === 0 && settings.playersCount === 2 ? 'bg-cyan-500/20 ring-2 ring-cyan-500 scale-110' : 'bg-slate-700/50'}`}>
-                    <p className="text-[10px] uppercase font-black opacity-30">{t('player1')}</p>
-                    <p className="text-2xl font-bold">{players[0].score}</p>
+                  <div className={`relative p-4 rounded-2xl text-center min-w-[120px] transition-all duration-500 ${currentPlayerIndex === 0 && settings.playersCount === 2 ? 'bg-cyan-500/20 ring-4 ring-cyan-500 scale-110 shadow-[0_0_20px_rgba(34,211,238,0.4)]' : 'bg-slate-700/50 opacity-60'}`}>
+                    <p className="text-[10px] uppercase font-black opacity-40">{t('player1')}</p>
+                    <p className="text-3xl font-black">{players[0].score}</p>
+                    {currentPlayerIndex === 0 && settings.playersCount === 2 && (
+                      <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-cyan-500 text-white text-[8px] px-2 py-0.5 rounded-full font-black animate-pulse">
+                        {t('activeTurn')}
+                      </div>
+                    )}
                   </div>
                   {settings.playersCount === 2 && (
-                    <div className={`p-4 rounded-2xl text-center min-w-[100px] transition-all ${currentPlayerIndex === 1 ? 'bg-indigo-500/20 ring-2 ring-indigo-500 scale-110' : 'bg-slate-700/50'}`}>
-                      <p className="text-[10px] uppercase font-black opacity-30">{t('player2')}</p>
-                      <p className="text-2xl font-bold">{players[1].score}</p>
+                    <div className={`relative p-4 rounded-2xl text-center min-w-[120px] transition-all duration-500 ${currentPlayerIndex === 1 ? 'bg-indigo-500/20 ring-4 ring-indigo-500 scale-110 shadow-[0_0_20px_rgba(99,102,241,0.4)]' : 'bg-slate-700/50 opacity-60'}`}>
+                      <p className="text-[10px] uppercase font-black opacity-40">{t('player2')}</p>
+                      <p className="text-3xl font-black">{players[1].score}</p>
+                      {currentPlayerIndex === 1 && (
+                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-indigo-500 text-white text-[8px] px-2 py-0.5 rounded-full font-black animate-pulse">
+                          {t('activeTurn')}
+                        </div>
+                      )}
                     </div>
                   )}
                </div>
                <div className="flex flex-col items-center">
-                  <div className="font-mono text-4xl font-black bg-black/40 px-8 py-3 rounded-2xl tabular-nums shadow-inner">{formatTime(seconds)}</div>
+                  <div className="font-mono text-4xl font-black bg-black/40 px-8 py-3 rounded-2xl tabular-nums shadow-inner border border-white/5">{formatTime(seconds)}</div>
                   {settings.playersCount === 1 && bestTime !== null && <p className="text-[10px] mt-2 font-bold uppercase tracking-widest text-cyan-500/50">{t('bestTime')}: {formatTime(bestTime)}</p>}
                </div>
                <div className="flex gap-3">
-                 <button onClick={() => setIsMuted(!isMuted)} className={`p-3 rounded-xl transition-all ${!isMuted ? 'bg-cyan-500 text-white shadow-lg' : 'bg-slate-700 text-slate-400'}`}>
+                 <button onClick={() => setIsMuted(!isMuted)} className={`p-3 rounded-xl transition-all ${!isMuted ? 'bg-cyan-500 text-white shadow-lg' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`}>
                    <i className={`fas ${isMuted ? 'fa-volume-mute' : 'fa-volume-up'}`}></i>
                  </button>
                  <button onClick={() => setStatus(GameStatus.SETUP)} className="p-3 bg-slate-700 hover:bg-slate-600 rounded-xl transition-all"><i className="fas fa-home"></i></button>
@@ -447,7 +463,7 @@ const App: React.FC = () => {
         )}
 
         {status === GameStatus.FINISHED && (
-          <div className="max-w-md w-full bg-slate-800 p-10 rounded-[2.5rem] text-center shadow-2xl border border-white/10 relative overflow-hidden animate-fade-in">
+          <div className="max-w-md w-full bg-slate-800 p-10 rounded-[2.5rem] text-center shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] border border-white/10 relative overflow-hidden animate-fade-in">
             {isNewRecord && <div className="absolute top-6 right-6 bg-yellow-400 text-black px-4 py-2 rounded-full text-xs font-black animate-bounce shadow-xl">{t('newRecord')}</div>}
             <div className="text-7xl mb-6">🏆</div>
             <h2 className="text-4xl font-black mb-10 text-white">
@@ -456,19 +472,19 @@ const App: React.FC = () => {
                 : 'CONGRATS!'}
             </h2>
             
-            <div className="bg-black/30 backdrop-blur-md p-8 rounded-3xl mb-10 flex flex-col gap-6 border border-white/5">
+            <div className="bg-black/30 backdrop-blur-md p-8 rounded-3xl mb-10 flex flex-col gap-6 border border-white/5 shadow-inner">
                {settings.playersCount === 2 ? (
-                 <div className="flex justify-around items-center py-2">
+                 <div className="flex justify-around items-center py-4 px-2 bg-white/5 rounded-2xl border border-white/5">
                     <div className="text-center">
-                      <p className="text-[10px] font-black uppercase opacity-30 mb-2">{t('player1')}</p>
-                      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-black border-2 transition-all ${players[0].score > players[1].score ? 'border-cyan-500 bg-cyan-500/20 scale-110 shadow-lg' : 'border-slate-700'}`}>
+                      <p className="text-[10px] font-black uppercase opacity-30 mb-3">{t('player1')}</p>
+                      <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition-all duration-700 ${players[0].score > players[1].score ? 'border-cyan-500 bg-cyan-500/20 scale-110 shadow-[0_0_25px_rgba(34,211,238,0.5)]' : 'border-slate-700'}`}>
                         {players[0].score}
                       </div>
                     </div>
-                    <div className="text-2xl font-black opacity-20">VS</div>
+                    <div className="text-3xl font-black opacity-10 mx-2 italic">VS</div>
                     <div className="text-center">
-                      <p className="text-[10px] font-black uppercase opacity-30 mb-2">{t('player2')}</p>
-                      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-black border-2 transition-all ${players[1].score > players[0].score ? 'border-indigo-500 bg-indigo-500/20 scale-110 shadow-lg' : 'border-slate-700'}`}>
+                      <p className="text-[10px] font-black uppercase opacity-30 mb-3">{t('player2')}</p>
+                      <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-4xl font-black border-4 transition-all duration-700 ${players[1].score > players[0].score ? 'border-indigo-500 bg-indigo-500/20 scale-110 shadow-[0_0_25px_rgba(99,102,241,0.5)]' : 'border-slate-700'}`}>
                         {players[1].score}
                       </div>
                     </div>
@@ -501,7 +517,7 @@ const App: React.FC = () => {
       </div>
 
       <footer className="mt-16 text-center text-[10px] font-bold opacity-30 space-y-3 tracking-widest uppercase">
-         <p>&copy; Noam Gold AI 2026 | {t('feedback')}: <a href="mailto:goldnoamai@gmail.com" className="underline hover:text-cyan-400">goldnoamai@gmail.com</a></p>
+         <p>&copy; Noam Gold AI 2026 | {t('feedback')}: <a href="mailto:goldnoamai@gmail.com" className="underline hover:text-cyan-400 transition-colors">goldnoamai@gmail.com</a></p>
          <div className="flex justify-center gap-6 text-base">
             <i className="fab fa-accessible-icon"></i>
             <i className="fas fa-brain"></i>
