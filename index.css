@@ -50,7 +50,7 @@ body {
 /* Match Animation with Glow */
 @keyframes match-glow {
     0% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0px var(--primary-accent); }
-    50% { transform: scale(1.05) rotateY(180deg); box-shadow: 0 0 50px 20px var(--primary-accent), 0 0 30px 10px var(--secondary-accent); border-color: var(--secondary-accent); }
+    50% { transform: scale(1.05) rotateY(180deg); box-shadow: 0 0 60px 30px var(--primary-accent), 0 0 40px 15px var(--secondary-accent); border-color: var(--secondary-accent); }
     100% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0px var(--primary-accent); }
 }
 .animate-match { 
@@ -58,7 +58,7 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
@@ -68,13 +68,13 @@ body {
   border-radius: 10px;
 }
 
-/* Responsive Grid with fixed 160px width */
+/* Responsive Grid with wider 240px width to show fewer cards per row */
 .game-grid {
     display: grid;
-    /* Ensuring cards are 160px wide, and as many as possible fit in a row */
-    grid-template-columns: repeat(auto-fill, 160px);
+    /* Increased min width to 240px to ensure fewer cards per row as requested */
+    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
     justify-content: center;
-    gap: 1.5rem;
+    gap: 2rem;
     width: 100%;
     margin: 0 auto;
 }
